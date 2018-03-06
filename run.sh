@@ -5,5 +5,5 @@ cmake ..
 echo "Building project..."
 make
 echo "Running project..."
-./ray ../Scenes/example.json
+./ray ../Scenes/scene01-lights-shadows.json
 echo "Finished."

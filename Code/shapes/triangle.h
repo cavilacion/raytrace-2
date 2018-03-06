@@ -6,13 +6,16 @@
 class Triangle: public Object
 {
     public:
-        Triangle(Point const  &A, Point const &B, Point const &C);
+        Triangle(Point const &v0,
+                 Point const &v1,
+                 Point const &v2);
 
         virtual Hit intersect(Ray const &ray);
 
-        Point const A, B, C; // three vertices
-        
-        Vector const N;
+        Point v0;
+        Point v1;
+        Point v2;
+        Vector N;
 };
 
 #endif

@@ -16,6 +16,7 @@ class Scene
     std::vector<ObjectPtr> objects;
     std::vector<LightPtr> lights;   // no ptr needed, but kept for consistency
     Point eye;
+    int hit; // if already 
 
     public:
 

@@ -8,6 +8,7 @@ class Ray
     public:
         Point O;        // origin
         Vector D;       // direction of the ray
+        int shadow;			// boolean for shadows
 
         Ray(Point const &from, Vector const &dir)
         :

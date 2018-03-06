@@ -1,5 +1,6 @@
 {
     "Eye": [200, 200, 1000],
+    "SuperSamplingFactor": 4,
     "Lights": [
         {
             "position": [-200, 600, 1500],
@@ -8,11 +9,10 @@
     ],
     "Objects": [
         {
-            "type": "torus",
+            "type": "sphere",
             "comment": "Blue sphere",
-            "pos": [0,0,100],
-            "R": 200,
-            "r": 70,
+            "position": [90, 320, 100],
+            "radius": 50,
             "material":
             {
                 "color": [0.0, 0.0, 1.0],

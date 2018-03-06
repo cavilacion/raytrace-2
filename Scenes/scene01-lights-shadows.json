@@ -1,32 +1,22 @@
 {
     "Eye": [200, 200, 1000],
+    "Shadows": true,
     "Lights": [
         {
             "position": [-200, 600, 1500],
-            "color": [1.0, 1.0, 1.0]
+            "color": [0.4, 0.4, 0.8]
+        },
+        {
+            "position": [600, 600, 1500],
+            "color": [0.8, 0.8, 0.4]
         }
     ],
     "Objects": [
-				{		
-						"type": "plane",
-						"comment": "gray plane",
-						"point": [0,0,50],
-						"normal": [0.1, -0.1, -0.99],
-						"material":
-						{
-                "color": [0.2, 0.2, 0.2],
-                "ka": 0.2,
-                "kd": 0.7,
-                "ks": 0.5,
-                "n": 64
-            }
-        },
         {
-            "type": "torus",
+            "type": "sphere",
             "comment": "Blue sphere",
-            "pos": [140,180,130],
-            "R": 90,
-            "r": 35,
+            "position": [90, 320, 100],
+            "radius": 50,
             "material":
             {
                 "color": [0.0, 0.0, 1.0],
@@ -92,20 +82,19 @@
                 "n": 32
             }
         },
-         {
-            "type": "triangle",
-            "comment": "Blue triangle",
-            "A": [290, 320, 290],
-            "B": [250, 250, 190],
-            "C": [330, 250, 230],
+        {
+            "type": "sphere",
+            "comment": "Grey sphere1",
+            "position": [200, 200, -1000],
+            "radius": 1000,
             "material":
             {
-                "color": [0.0, 0.8, 0.5],
+                "color": [0.4, 0.4, 0.4],
                 "ka": 0.2,
-                "kd": 0.7,
-                "ks": 0.5,
-                "n": 64
+                "kd": 0.8,
+                "ks": 0,
+                "n": 1
             }
-				}
+        }
     ]
 }

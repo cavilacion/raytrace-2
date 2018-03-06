@@ -1,57 +1,42 @@
 #include "sphere.h"
-#include <iostream>
+#include "solvers.h"
+
 #include <cmath>
 
 using namespace std;
 
 Hit Sphere::intersect(Ray const &ray)
 {
-    /****************************************************
-    * RT1.1: INTERSECTION CALCULATION
-    *
-    * Given: ray, position, r
-    * Sought: intersects? if true: *t
-    *
-    * Insert calculation of ray/sphere intersection here.
-    *
-    * You have the sphere's center (C) and radius (r) as well as
-    * the ray's origin (ray.O) and direction (ray.D).
-    *
-    * If the ray does not intersect the sphere, return false.
-    * Otherwise, return true and place the distance of the
-    * intersection point from the ray origin in *t (see example).
-    ****************************************************/
+    // Sphere formula: ||x - position||^2 = r^2
+    // Line formula:   x = ray.O + t * ray.D
 
-    Vector OC = (ray.O-position);
-    Vector v = ray.D;
-		
-	double t, a, b, c;
-	a=1.0;
-	b=2.0*v.dot(OC);
-	c=OC.dot(OC)-r*r;
-	double D = b*b - 4.0*a*c;
-    if (D<0) {
+    Vector L = ray.O - position;
+    double a = ray.D.dot(ray.D);
+    double b = 2 * ray.D.dot(L);
+    double c = L.dot(L) - r * r;
+
+    double t0;
+    double t1;
+    if (not Solvers::quadratic(a, b, c, t0, t1))
         return Hit::NO_HIT();
+
+    // t0 is closest hit
+    if (t0 < 0)  // check if it is not behind the camera
+    {
+        t0 = t1;    // try t1
+        if (t0 < 0) // both behind the camera
+            return Hit::NO_HIT();
     }
 
-    /****************************************************
-    * RT1.2: NORMAL CALCULATION
-    *
-    * Given: t, C, r
-    * Sought: N
-    *
-    * Insert calculation of the sphere's normal at the intersection point.
-    ****************************************************/
-		
-	double t0 = (-b - sqrt(D) ) / (2*a);
-	double t1 = (-b + sqrt(D) ) / (2*a);
-	t = (t0 < t1 && t0 >= 0) ? t0 : t1;
-	if (t<=0) {
-        return Hit::NO_HIT();
-    }         
-	Point P = ray.at(t);
-    Vector N = (P - position).normalized();
-    return Hit(t,N);
+    // calculate normal
+    Point hit = ray.at(t0);
+    Vector N = (hit - position).normalized();
+
+    // determine orientation of the normal
+    if (N.dot(ray.D) > 0)
+        N = -N;
+
+    return Hit(t0, N);
 }
 
 Sphere::Sphere(Point const &pos, double radius)

@@ -12,14 +12,17 @@ using namespace std;
 
 Color Scene::trace(Ray const &ray)
 {
+		unsigned idx, obj_idx;
+		
     // Find hit object and distance
     Hit min_hit(numeric_limits<double>::infinity(), Vector());
     ObjectPtr obj = nullptr;
-    for (unsigned idx = 0; idx != objects.size(); ++idx)
+    for (idx = 0; idx != objects.size(); ++idx)
     {
         Hit hit(objects[idx]->intersect(ray));
         if (hit.t < min_hit.t)
         {
+						obj_idx = idx;
             min_hit = hit;
             obj = objects[idx];
         }
@@ -27,7 +30,7 @@ Color Scene::trace(Ray const &ray)
 
     // No hit? Return background color.
     if (!obj) return Color(0.0, 0.0, 0.0);
-
+		
     Material material = obj->material;          //the hit objects material
     Point hit = ray.at(min_hit.t);                 //the hit point
     Vector N = min_hit.N;                          //the normal at hit point
@@ -54,20 +57,35 @@ Color Scene::trace(Ray const &ray)
 	Color color = material.color;
 	Vector I;
 	Triple Ia = color*material.ka;  
-	
 	for(auto lightptr : lights) {
 		Vector lightposition = lightptr->position;
 		Color lightcolor = lightptr->color;
+		Vector lightdir = (hit-lightposition).normalized();
+		// check if light source hits other object first
+		int in_shadow = 0; // assume object is not in shadow
+		for (idx = 0; idx < objects.size(); ++idx) {
+			if (idx != obj_idx) {
+				Ray lightray(lightposition, lightdir);
+				Hit this_hit(objects[obj_idx]->intersect(lightray));
+				Hit other_hit(objects[idx]->intersect(lightray));
+				if (other_hit.t < this_hit.t) {
+						in_shadow = 1; 
+						break;
+				}
+			}
+    }
 		
-		Vector L = (lightposition-hit).normalized();
-		Vector R = (2.0*N.dot(L)*N) - L;			// Reflection fector 
-		                
-		Triple Id = color*lightcolor*material.kd*max(0.0,L.dot(N));
-		Triple Is = pow(max(0.0,V.dot(R)),material.n)*lightcolor*material.ks;
-		
-		I += Id + Is;
+		if (!in_shadow) {
+			Vector L = (lightposition-hit).normalized();
+			Vector R = (2.0*N.dot(L)*N) - L;			// Reflection fector 
+											
+			Triple Id = color*lightcolor*material.kd*max(0.0,L.dot(N));
+			Triple Is = pow(max(0.0,V.dot(R)),material.n)*lightcolor*material.ks;
+			
+			I += Id + Is;
+		}
 	}   
-    return Ia+I ;
+  return Ia+I ;
 }
 
 void Scene::render(Image &img)
