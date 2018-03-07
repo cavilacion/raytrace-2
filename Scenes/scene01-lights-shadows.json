@@ -1,6 +1,8 @@
 {
     "Eye": [200, 200, 1000],
     "Shadows": true,
+    "Reflections": 5,
+    "Samples": 16,
     "Lights": [
         {
             "position": [-200, 600, 1500],

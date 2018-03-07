@@ -8,8 +8,6 @@
 #include <cmath>
 #include <limits>
 
-#define MAX_REFLECT 5
-
 using namespace std;
 
 Color Scene::trace(Ray const &ray, const int depth)
@@ -50,7 +48,7 @@ Color Scene::trace(Ray const &ray, const int depth)
 			
 			// check if light source hits other object first
 			int in_shadow = 0; // assume object is not in shadow
-			for (idx = 0; idx < objects.size(); ++idx) {
+			if (shadows) for (idx = 0; idx < objects.size(); ++idx) {
 				if (idx != obj_idx) {
 					Ray lightray(lightposition, lightdir);
 					Hit this_hit(objects[obj_idx]->intersect(lightray));
@@ -76,7 +74,7 @@ Color Scene::trace(Ray const &ray, const int depth)
 		}   
 		
 		// continuation of view ray (specular reflection) with recursive call
-		if (depth < MAX_REFLECT) {
+		if (depth < num_reflections) {
 			Vector reflect = (2.0*N.dot(V)*N - V).normalized();
 			Ray from(hit+0.05*reflect, reflect);
 			Color light_reflection = material.ks*trace (from, depth+1);
@@ -93,11 +91,25 @@ void Scene::render(Image &img)
     {
         for (unsigned x = 0; x < w; ++x)
         {
-            Point pixel(x + 0.5, h - 1 - y + 0.5, 0);
-            Ray ray(eye, (pixel - eye).normalized());
-            Color col = trace(ray, 0);
-            col.clamp();
-            img(x, y) = col;
+						int num_pixels = supersampling*supersampling;
+						float start = 0.5/supersampling;
+						float delta = 1.0/supersampling;
+						Color *colors = (Color*)malloc (num_pixels*sizeof(Color));
+						for (int i = 0; i < supersampling; i++) {
+								for (int j = 0; j < supersampling; j++) {
+										Point pixel(x + (start + i*delta), h - 1 - y + (start + j*delta), 0);
+										Ray ray(eye, (pixel - eye).normalized());
+										Color col = trace(ray, 0);
+										col.clamp();
+										colors[i*supersampling + j] = col;
+								}
+						}
+						Color col;
+						float weight = 1.0/num_pixels;
+						for (int i = 0; i < num_pixels; i++) {
+								col += weight*colors[i];
+						}
+						img(x, y) = col;
         }
     }
 }
@@ -117,6 +129,12 @@ void Scene::addLight(Light const &light)
 void Scene::setEye(Triple const &position)
 {
     eye = position;
+}
+
+void Scene::configure(bool show_shadows, int num_ref, int supsam) {
+	shadows = show_shadows;
+	num_reflections = num_ref;
+	supersampling = supsam;
 }
 
 unsigned Scene::getNumObject()

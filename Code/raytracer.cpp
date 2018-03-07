@@ -112,7 +112,10 @@ try
     Point eye(jsonscene["Eye"]);
     scene.setEye(eye);
 
-    // TODO: add your other configuration settings here
+    bool shadows = jsonscene["Shadows"];
+    int num_reflections = jsonscene["Reflections"];
+    int supersampling = jsonscene["Samples"];
+    scene.configure (shadows, num_reflections, supersampling);
 
     for (auto const &lightNode : jsonscene["Lights"])
         scene.addLight(parseLightNode(lightNode));
