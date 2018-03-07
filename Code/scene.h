@@ -21,7 +21,7 @@ class Scene
     public:
 
         // trace a ray into the scene and return the color
-        Color trace(Ray const &ray);
+        Color trace(Ray const &ray, int depth);
 
         // render the scene to the given image
         void render(Image &img);
