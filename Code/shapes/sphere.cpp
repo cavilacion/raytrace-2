@@ -2,6 +2,7 @@
 #include "solvers.h"
 
 #include <cmath>
+#include <math.h>
 
 using namespace std;
 
@@ -37,6 +38,16 @@ Hit Sphere::intersect(Ray const &ray)
         N = -N;
 
     return Hit(t0, N);
+}
+
+Color Sphere::mapPointToTextureCoordinates(Point p){
+    float u,v, phi,theta, pi = M_PI;
+
+    theta = acos((p.z - position.z)/r);
+    phi = atan2(p.y - position.y, p.x - position.x);
+    u = phi/(2.0f*pi);
+    v = (pi - theta)/pi;
+    return texture.colorAt(u, v);
 }
 
 Sphere::Sphere(Point const &pos, double radius)

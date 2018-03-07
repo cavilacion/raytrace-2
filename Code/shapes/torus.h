@@ -19,10 +19,11 @@ class Torus: public Object
         Torus(Point const &C, double r, double R);
 
         virtual Hit intersect(Ray const &ray);
+        virtual Color mapPointToTextureCoordinates(Point p);
         
         Point const C;
         
-        double const R, r;
+        double const R, r;        
 };
 
 std::complex<double> cuberoot(std::complex<double> z);

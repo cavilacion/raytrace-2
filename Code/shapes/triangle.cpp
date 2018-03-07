@@ -10,7 +10,7 @@ Hit Triangle::intersect(Ray const &ray)
     Vector edge2(v2 - v0);
     Vector h = ray.D.cross(edge2);
     double a = edge1.dot(h);
-    if (a > -DBL_EPSILON && a < DBL_EPSILON)
+    if (a > - DBL_EPSILON && a < DBL_EPSILON)
         return Hit::NO_HIT();
 
     double f = 1 / a;
@@ -51,4 +51,8 @@ Triangle::Triangle(Point const &v0,
     Vector V(v2 - v0);
     N = U.cross(V);
     N.normalize();
+}
+
+Color Triangle::mapPointToTextureCoordinates(Point p){
+    return Color(0.0,0.0,0.0);
 }

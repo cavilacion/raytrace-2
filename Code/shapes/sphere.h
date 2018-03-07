@@ -12,6 +12,8 @@ class Sphere: public Object
 
         Point const position;
         double const r;
+
+        virtual Color mapPointToTextureCoordinates(Point p);
 };
 
 #endif

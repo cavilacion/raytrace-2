@@ -19,3 +19,7 @@ Plane::Plane(Point const  &point, Vector normal)
 	point(point),
 	normal(normal.normalized())
 {}
+
+Color Plane::mapPointToTextureCoordinates(Point p){
+    return Color(0.0,0.0,0.0);
+}

@@ -25,7 +25,8 @@
                 "kd": 0.7,
                 "ks": 0.5,
                 "n": 64
-            }
+            },
+            "texture": "1"
         },
         {
             "type": "sphere",
@@ -39,7 +40,8 @@
                 "kd": 0.3,
                 "ks": 0.5,
                 "n": 8
-            }
+            },
+            "texture": "2"
         },
         {
             "type": "sphere",
@@ -53,7 +55,8 @@
                 "kd": 0.7,
                 "ks": 0.8,
                 "n": 32
-            }
+            },
+            "texture": "3"
         },
         {
             "type": "sphere",
@@ -67,7 +70,8 @@
                 "kd": 0.8,
                 "ks": 0.0,
                 "n": 1
-            }
+            },
+            "texture": "../Scenes/earthmap1k.png"
         },
         {
             "type": "sphere",
@@ -81,7 +85,8 @@
                 "kd": 0.8,
                 "ks": 0.5,
                 "n": 32
-            }
+            },
+            "texture": "5"
         },
         {
             "type": "sphere",
@@ -95,7 +100,8 @@
                 "kd": 0.8,
                 "ks": 0,
                 "n": 1
-            }
+            },
+            "texture": "6"
         }
     ]
 }
