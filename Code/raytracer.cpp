@@ -76,9 +76,10 @@ bool Raytracer::parseObjectNode(json const &node)
     // Parse material and add object to the scene
     obj->material = parseMaterialNode(node["material"]);
 
-    string location = node["texture"];
-    obj->texture = Image(location);
-    
+    // Parse texture
+    //string location = node["texture"];
+    //obj->texture = Image(location);
+        
     scene.addObject(obj);
     return true;
 }
