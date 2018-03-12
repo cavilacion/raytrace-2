@@ -113,8 +113,8 @@ try
     scene.setEye(eye);
 
     bool shadows = jsonscene["Shadows"];
-    int num_reflections = jsonscene["Reflections"];
-    int supersampling = jsonscene["Samples"];
+    int num_reflections = jsonscene["MaxRecursionDepth"];
+    int supersampling = jsonscene["SuperSamplingFactor"];
     scene.configure (shadows, num_reflections, supersampling);
 
     for (auto const &lightNode : jsonscene["Lights"])
