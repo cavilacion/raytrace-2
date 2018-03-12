@@ -199,5 +199,9 @@ std::complex<double> *solveQuarticComplex (const std::complex<double> *a) {
 	return x;
 }
 
+Color Torus::mapPointToTextureCoordinates(Point p){
+    return Color(0.0,0.0,0.0);
+}
+
 
 

@@ -67,7 +67,8 @@
                 "kd": 0.8,
                 "ks": 0.0,
                 "n": 1
-            }
+            },
+            "texture": "../Scenes/earthmap1k.png"
         },
         {
             "type": "sphere",

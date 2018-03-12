@@ -12,6 +12,8 @@ class Triangle: public Object
 
         virtual Hit intersect(Ray const &ray);
 
+        virtual Color mapPointToTextureCoordinates(Point p);
+
         Point v0;
         Point v1;
         Point v2;

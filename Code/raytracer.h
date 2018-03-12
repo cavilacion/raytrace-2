@@ -26,6 +26,7 @@ class Raytracer
 
         Light parseLightNode(nlohmann::json const &node) const;
         Material parseMaterialNode(nlohmann::json const &node) const;
+        Image parseTextureNode(nlohmann::json const &node) const;
 };
 
 #endif

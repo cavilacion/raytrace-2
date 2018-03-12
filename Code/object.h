@@ -7,6 +7,7 @@
 #include "hit.h"
 #include "ray.h"
 #include "triple.h"
+#include "image.h"
 
 #include <memory>
 class Object;
@@ -16,11 +17,14 @@ class Object
 {
     public:
         Material material;
+        Image texture;
 
         virtual ~Object() = default;
 
         virtual Hit intersect(Ray const &ray) = 0;  // must be implemented
                                                     // in derived class
+
+        virtual Color mapPointToTextureCoordinates(Point p) = 0;
 };
 
 #endif
